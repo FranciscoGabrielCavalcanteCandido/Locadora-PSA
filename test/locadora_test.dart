@@ -14,15 +14,28 @@
 */
 
 import 'package:carros_locadora_psa/model/pessoa.dart';
+import 'package:carros_locadora_psa/model/veiculo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  var pessoa = Pessoa();
-  pessoa.nome = 'Eduardo';
-  pessoa.cpf = '123.465.789-01';
-  pessoa.status = true;
+  var cliente = Pessoa();
+  cliente.nome = 'Eduardo';
+  cliente.cpf = '123.465.789-01';
+  cliente.status = true;
+
+  var veiculo = Veiculo();
+  veiculo.placa = 'AXY-1223';
+  veiculo.documentacao = true;
 
   test('O cliente está devidamente cadastrado', () {
-    expect(pessoa.validarCadastro(pessoa.status), false);
+    expect(cliente.validarCadastro(cliente.status), false);
+  });
+
+  test('O veiculo contem placa', () {
+    expect(veiculo.validarPlacaVeiculo(veiculo: veiculo), true);
+  });
+
+  test('Documentação está OK', () {
+    expect(veiculo.validarDocumentacaoVeiculo(veiculo: veiculo), false);
   });
 }

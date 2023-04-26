@@ -7,7 +7,7 @@ class Pessoa implements InterfacePessoa {
 
   @override
   bool validarCadastro(bool status) {
-    if (status = true) throw Exception('O cliente possui cadastro');
+    if (status != true) throw Exception('O cliente não possui cadastro');
     return false;
   }
 }
