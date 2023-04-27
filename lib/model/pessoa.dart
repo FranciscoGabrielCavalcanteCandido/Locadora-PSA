@@ -5,6 +5,7 @@ class Pessoa implements InterfacePessoa {
   late String cpf;
   late bool status;
   late String cnh;
+  late double pagamento;
 
   @override
   bool validarCadastro(bool status) {

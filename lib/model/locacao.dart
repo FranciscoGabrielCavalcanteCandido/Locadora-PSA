@@ -7,6 +7,7 @@ import 'package:carros_locadora_psa/model/locacao.dart';
 class Locacao implements InterfaceLocacao {
   late bool clienteCadastrado;
   late bool documentacaoEmDia;
+  late double pagamentoEfetuado;
 
   @override
   bool validarLocacaoDocumentoVeiculo({required Veiculo veiculo}) {
@@ -22,5 +23,13 @@ class Locacao implements InterfaceLocacao {
       return clienteCadastrado;
     }
     throw Exception('Pessoa não está cadastrada');
+  }
+
+  @override
+  double validarPagamento({required Pessoa pessoa}) {
+    if (pessoa.pagamento >= 1) {
+      return pagamentoEfetuado;
+    }
+    throw Exception('O carro não pode ser liberado, efetue o pagamento');
   }
 }

@@ -24,6 +24,7 @@ void main() {
   cliente.cpf = '123.465.789-01';
   cliente.status = true;
   cliente.cnh = '123456';
+  cliente.pagamento = 00.00;
 
   var veiculo = Veiculo();
   veiculo.placa = 'AXY-1223';
@@ -32,6 +33,7 @@ void main() {
   var locacao = Locacao();
   locacao.clienteCadastrado = cliente.status;
   locacao.documentacaoEmDia = veiculo.documentacao;
+  locacao.pagamentoEfetuado = cliente.pagamento;
 
   test('O cliente está devidamente cadastrado', () {
     expect(cliente.validarCadastro(cliente.status), false);
@@ -55,5 +57,10 @@ void main() {
 
   test('O carro pode ser locado o documento está em dia', () {
     expect(locacao.validarLocacaoDocumentoVeiculo(veiculo: veiculo), true);
+  });
+
+  test('Pagamento efetuado, o carro já pode ser locado', () {
+    expect(
+        locacao.validarPagamento(pessoa: cliente), locacao.pagamentoEfetuado);
   });
 }
