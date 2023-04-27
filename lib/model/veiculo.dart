@@ -12,6 +12,7 @@ class Veiculo implements InterfaceVeiculo {
     throw Exception('Placa inváida');
   }
 
+  @override
   bool validarDocumentacaoVeiculo({required Veiculo veiculo}) {
     if (documentacao == false)
       throw Exception('Carro não pode ser locado, documentação pendente');

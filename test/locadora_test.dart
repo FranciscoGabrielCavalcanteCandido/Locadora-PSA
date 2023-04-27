@@ -13,6 +13,7 @@
 
 */
 
+import 'package:carros_locadora_psa/model/locacao.dart';
 import 'package:carros_locadora_psa/model/pessoa.dart';
 import 'package:carros_locadora_psa/model/veiculo.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +23,15 @@ void main() {
   cliente.nome = 'Eduardo';
   cliente.cpf = '123.465.789-01';
   cliente.status = true;
+  cliente.cnh = '123456';
 
   var veiculo = Veiculo();
   veiculo.placa = 'AXY-1223';
   veiculo.documentacao = true;
+
+  var locacao = Locacao();
+  locacao.clienteCadastrado = cliente.status;
+  locacao.documentacaoEmDia = veiculo.documentacao;
 
   test('O cliente está devidamente cadastrado', () {
     expect(cliente.validarCadastro(cliente.status), false);
@@ -37,5 +43,17 @@ void main() {
 
   test('Documentação está OK', () {
     expect(veiculo.validarDocumentacaoVeiculo(veiculo: veiculo), false);
+  });
+
+  test('Possui CNH', () {
+    expect(cliente.validarCNH(pessoa: cliente), true);
+  });
+
+  test('O carro pode ser locado o cliente possui cadastro', () {
+    expect(locacao.validarLocacaoCadastroPessoa(pessoa: cliente), true);
+  });
+
+  test('O carro pode ser locado o documento está em dia', () {
+    expect(locacao.validarLocacaoDocumentoVeiculo(veiculo: veiculo), true);
   });
 }
