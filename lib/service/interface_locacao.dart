@@ -7,4 +7,6 @@ abstract class InterfaceLocacao {
   bool validarLocacaoCadastroPessoa({required Pessoa pessoa});
 
   double validarPagamento({required Pessoa pessoa});
+
+  bool validarRevisao({required Veiculo veiculo});
 }

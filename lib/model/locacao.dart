@@ -8,6 +8,7 @@ class Locacao implements InterfaceLocacao {
   late bool clienteCadastrado;
   late bool documentacaoEmDia;
   late double pagamentoEfetuado;
+  late bool carroRevisado;
 
   @override
   bool validarLocacaoDocumentoVeiculo({required Veiculo veiculo}) {
@@ -31,5 +32,13 @@ class Locacao implements InterfaceLocacao {
       return pagamentoEfetuado;
     }
     throw Exception('O carro não pode ser liberado, efetue o pagamento');
+  }
+
+  @override
+  bool validarRevisao({required Veiculo veiculo}) {
+    if (veiculo.revisao != false) {
+      return true;
+    }
+    throw Exception('O carro náo pode ser locado, precisa ser feita a revisao');
   }
 }

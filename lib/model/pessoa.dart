@@ -6,6 +6,8 @@ class Pessoa implements InterfacePessoa {
   late bool status;
   late String cnh;
   late double pagamento;
+  late double qtdDiasAtrasados;
+  late double valorComMulta;
 
   @override
   bool validarCadastro(bool status) {
@@ -19,5 +21,16 @@ class Pessoa implements InterfacePessoa {
       return true;
     }
     throw Exception('Não possui CNH');
+  }
+
+  @override
+  double validarPrazoDeEntrega({required Pessoa pessoa}) {
+    var porcentagem;
+    porcentagem = 10 * (pessoa.pagamento / 100);
+    if (pessoa.qtdDiasAtrasados > 0) {
+      valorComMulta = qtdDiasAtrasados * porcentagem + pessoa.pagamento;
+      return valorComMulta;
+    }
+    throw Exception('Carro entregue no prazo');
   }
 }

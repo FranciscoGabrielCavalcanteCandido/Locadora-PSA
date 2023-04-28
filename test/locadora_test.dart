@@ -24,16 +24,20 @@ void main() {
   cliente.cpf = '123.465.789-01';
   cliente.status = true;
   cliente.cnh = '123456';
-  cliente.pagamento = 00.00;
+  cliente.pagamento = 500.00;
+  cliente.qtdDiasAtrasados = 3;
 
   var veiculo = Veiculo();
   veiculo.placa = 'AXY-1223';
   veiculo.documentacao = true;
+  veiculo.revisao = true;
+  veiculo.disponivel = true;
 
   var locacao = Locacao();
   locacao.clienteCadastrado = cliente.status;
   locacao.documentacaoEmDia = veiculo.documentacao;
   locacao.pagamentoEfetuado = cliente.pagamento;
+  locacao.carroRevisado = veiculo.revisao;
 
   test('O cliente está devidamente cadastrado', () {
     expect(cliente.validarCadastro(cliente.status), false);
@@ -62,5 +66,17 @@ void main() {
   test('Pagamento efetuado, o carro já pode ser locado', () {
     expect(
         locacao.validarPagamento(pessoa: cliente), locacao.pagamentoEfetuado);
+  });
+
+  test('O carro pode ser locado, pois está revisado', () {
+    expect(locacao.validarRevisao(veiculo: veiculo), true);
+  });
+
+  test('O carro está disponivel', () {
+    expect(veiculo.validarCarroDisponivel(veiculo: veiculo), true);
+  });
+
+  test('O carro foi entregue fora do prazo', () {
+    expect(cliente.validarPrazoDeEntrega(pessoa: cliente), 650);
   });
 }
