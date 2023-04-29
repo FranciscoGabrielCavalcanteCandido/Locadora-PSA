@@ -16,14 +16,14 @@ class Veiculo implements InterfaceVeiculo {
 
   @override
   bool validarDocumentacaoVeiculo({required Veiculo veiculo}) {
-    if (documentacao == false)
+    if (veiculo.documentacao == false)
       throw Exception('Carro não pode ser locado, documentação pendente');
     return false;
   }
 
   @override
   bool validarCarroDisponivel({required Veiculo veiculo}) {
-    if (disponivel == false)
+    if (veiculo.disponivel == false)
       throw Exception('Carro já foi locado, não está disponivel');
     return true;
   }

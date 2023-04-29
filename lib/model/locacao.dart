@@ -9,6 +9,11 @@ class Locacao implements InterfaceLocacao {
   late bool documentacaoEmDia;
   late double pagamentoEfetuado;
   late bool carroRevisado;
+  late double valorComMulta;
+  late double qtdDiasAtrasados;
+  late double pagamento;
+
+
 
   @override
   bool validarLocacaoDocumentoVeiculo({required Veiculo veiculo}) {
@@ -28,7 +33,7 @@ class Locacao implements InterfaceLocacao {
 
   @override
   double validarPagamento({required Pessoa pessoa}) {
-    if (pessoa.pagamento >= 1) {
+    if (pagamento >= 500) {
       return pagamentoEfetuado;
     }
     throw Exception('O carro não pode ser liberado, efetue o pagamento');
@@ -40,5 +45,58 @@ class Locacao implements InterfaceLocacao {
       return true;
     }
     throw Exception('O carro náo pode ser locado, precisa ser feita a revisao');
+  }
+
+  @override
+  double validarPrazoDeEntrega({required Pessoa pessoa}) {
+    var porcentagem;
+    porcentagem = 10 * (pagamento / 100);
+    if (qtdDiasAtrasados > 0) {
+      valorComMulta = qtdDiasAtrasados * porcentagem + pagamento;
+      return valorComMulta;
+    }
+    throw Exception('Carro entregue no prazo');
+  }
+
+  @override
+  bool validarVeiculoPlaca() {
+    var veiculo = Veiculo();
+    veiculo.placa = 'AXY-1223';
+    veiculo.documentacao = true;
+    veiculo.revisao = true;
+    veiculo.disponivel = true;
+
+    var veiculo2 = Veiculo();
+    veiculo2.placa = 'AXY-5666';
+    veiculo2.documentacao = true;
+    veiculo2.revisao = true;
+    veiculo2.disponivel = true;
+
+    var listaVeiculos = <Veiculo>[veiculo, veiculo2];
+
+    var temDuplicado = false;
+    Set<String> listaPlacas = {}; 
+    for(var veiculo in listaVeiculos ){
+      if (listaPlacas.contains(veiculo.placa)){
+        temDuplicado = true;
+        break;
+      }else {
+        listaPlacas.add(veiculo.placa);
+      }
+    }
+
+    if(temDuplicado){
+      throw Exception('Já existe um carro com está placa');  
+      }
+      return true;
+  }
+
+  @override
+  bool validarClienteViculoLocado(Pessoa pessoa) {
+    if (pessoa.veiculoLocado == true) {
+        throw Exception('O Cliente não pode locar o carro, já possuiu um carro locado');
+    }
+    return true;
+
   }
 }
